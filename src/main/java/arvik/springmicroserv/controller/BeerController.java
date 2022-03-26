@@ -29,8 +29,14 @@ public class BeerController {
         return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
     }
 
-    @PostMapping()
-    public ResponseEntity<BeerDto> handlePost(BeerDto beerDto) {
+    /**
+     * метод добавления обжекта
+     * @param beerDto обжект для добавления
+     * @return на выходе создание обжекта
+     * добавлен реквестбоди потому что на выходе получался пустой обжект
+     */
+    @PostMapping
+    public ResponseEntity<BeerDto> handlePost(@RequestBody BeerDto beerDto) {
         BeerDto saveDto = beerService.saveNewBeer(beerDto);
         HttpHeaders headers = new HttpHeaders();
         /*добавим тут урл хосту позже*/
@@ -38,8 +44,15 @@ public class BeerController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
+    /**
+     * метод обновления пиваса
+     * @param beerId пивное ид
+     * @param beerDto пивной обжект
+     * @return на выходе статус, потому как не доделан метод
+     * добавлен реквестбоди потому что на выходе получался пустой обжект
+     */
     @PutMapping({"/{beerId}"})
-    public ResponseEntity<BeerDto> handleUpdate(@PathVariable("beerId") UUID beerId, BeerDto beerDto) {
+    public ResponseEntity<BeerDto> handleUpdate(@PathVariable("beerId") UUID beerId, @RequestBody BeerDto beerDto) {
         beerService.updateBeer(beerId, beerDto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
