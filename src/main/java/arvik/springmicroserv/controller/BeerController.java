@@ -56,4 +56,15 @@ public class BeerController {
         beerService.updateBeer(beerId, beerDto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    /**
+     * метод удаления
+     * @param beerId ид для удаления
+     *               статус в отличие от других метод задаем аннотацией
+     */
+    @DeleteMapping({"/{beerId}"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBeer(@PathVariable("beerId") UUID beerId) {
+        beerService.deleteById(beerId);
+        }
 }
