@@ -1,7 +1,8 @@
-package arvik.springmicroserv.controller;
+package arvik.springmicroserv.controller.v2;
 
 import arvik.springmicroserv.model.BeerDto;
-import arvik.springmicroserv.services.BeerService;
+import arvik.springmicroserv.model.v2.BeerDtoV2;
+import arvik.springmicroserv.services.v2.BeerServiceV2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,22 +13,20 @@ import java.util.UUID;
 /**
  * @author ArvikV
  * @version 1.0
- * @since 25.03.2022
+ * @since 27.03.2022
  */
-@Deprecated
-@RequestMapping("/api/v1/beer")
+@RequestMapping("/api/v2/beer")
 @RestController
-public class BeerController {
+public class BeerControllerV2 {
+    private final BeerServiceV2 beerServiceV2;
 
-    private final BeerService beerService;
-
-    public BeerController(BeerService beerService) {
-        this.beerService = beerService;
+    public BeerControllerV2(BeerServiceV2 beerServiceV2) {
+        this.beerServiceV2 = beerServiceV2;
     }
 
     @GetMapping({"/{beerId}"})
-    public ResponseEntity<BeerDto> getBeer(@PathVariable("beerId") UUID beerId) {
-        return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
+    public ResponseEntity<BeerDtoV2> getBeer(@PathVariable("beerId") UUID beerId) {
+        return new ResponseEntity<>(beerServiceV2.getBeerById(beerId), HttpStatus.OK);
     }
 
     /**
@@ -37,8 +36,8 @@ public class BeerController {
      * добавлен реквестбоди потому что на выходе получался пустой обжект
      */
     @PostMapping
-    public ResponseEntity<BeerDto> handlePost(@RequestBody BeerDto beerDto) {
-        BeerDto saveDto = beerService.saveNewBeer(beerDto);
+    public ResponseEntity<BeerDtoV2> handlePost(@RequestBody BeerDtoV2 beerDto) {
+        BeerDtoV2 saveDto = beerServiceV2.saveNewBeer(beerDto);
         HttpHeaders headers = new HttpHeaders();
         /*добавим тут урл хосту позже*/
         headers.add("location", "/api/v1/beer" + saveDto.getId().toString());
@@ -53,8 +52,8 @@ public class BeerController {
      * добавлен реквестбоди потому что на выходе получался пустой обжект
      */
     @PutMapping({"/{beerId}"})
-    public ResponseEntity<BeerDto> handleUpdate(@PathVariable("beerId") UUID beerId, @RequestBody BeerDto beerDto) {
-        beerService.updateBeer(beerId, beerDto);
+    public ResponseEntity<BeerDto> handleUpdate(@PathVariable("beerId") UUID beerId, @RequestBody BeerDtoV2 beerDto) {
+        beerServiceV2.updateBeer(beerId, beerDto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
@@ -66,6 +65,6 @@ public class BeerController {
     @DeleteMapping({"/{beerId}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBeer(@PathVariable("beerId") UUID beerId) {
-        beerService.deleteById(beerId);
-        }
+        beerServiceV2.deleteById(beerId);
+    }
 }
