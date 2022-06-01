@@ -5,8 +5,13 @@ import arvik.springmicroserv.services.CustomerService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -29,7 +34,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDto> handlePost(@RequestBody CustomerDto customerDto) {
+    public ResponseEntity<CustomerDto> handlePost(@Valid @RequestBody CustomerDto customerDto) {
         CustomerDto saveDto = customerService.saveNewCustomer(customerDto);
         HttpHeaders headers = new HttpHeaders();
         headers.add("location", "/api/v1/customer" + saveDto.getId().toString());
@@ -37,13 +42,29 @@ public class CustomerController {
     }
     @PutMapping({"/{customerId}"})
     public ResponseEntity<CustomerDto> handleUpdate(@PathVariable("customerId") UUID customerId,
-                                                    @RequestBody CustomerDto customerDto) {
+                                                    @Valid @RequestBody CustomerDto customerDto) {
         customerService.updateCustomer(customerId, customerDto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @DeleteMapping({"/{customerId}"})
     public void deleteCustomer(@PathVariable("customerId") UUID customerId) {
         customerService.deleteById(customerId);
+    }
+
+    /**
+     * Задание, ловим исключение
+     * @param e исключение
+     * @return на выходе пойманное исключение(в данном случае если имя вышло с промежутка 3-100 и не нулл установленные в дто)
+     * и итогом BadRequest
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<List> validationErrorHandler(ConstraintViolationException e) {
+        List<String> errors = new ArrayList<>(e.getConstraintViolations().size());
+        e.getConstraintViolations().forEach(constraintViolation -> {
+            errors.add(constraintViolation.getPropertyPath() + " : " +  constraintViolation.getMessage());
+        });
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+
     }
 
 }
