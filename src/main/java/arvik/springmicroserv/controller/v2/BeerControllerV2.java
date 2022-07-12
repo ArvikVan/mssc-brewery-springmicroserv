@@ -43,7 +43,7 @@ public class BeerControllerV2 {
      * добавлен реквестбоди потому что на выходе получался пустой обжект
      */
     @PostMapping
-    public ResponseEntity<BeerDtoV2> handlePost(@Valid @NotNull @RequestBody BeerDtoV2 beerDto) {
+    public ResponseEntity<BeerDtoV2> handlePost(@Validated @NotNull @RequestBody BeerDtoV2 beerDto) {
         BeerDtoV2 saveDto = beerServiceV2.saveNewBeer(beerDto);
         HttpHeaders headers = new HttpHeaders();
         /*добавим тут урл хосту позже*/
@@ -59,7 +59,7 @@ public class BeerControllerV2 {
      * добавлен реквестбоди потому что на выходе получался пустой обжект
      */
     @PutMapping({"/{beerId}"})
-    public ResponseEntity<BeerDto> handleUpdate(@PathVariable("beerId") UUID beerId, @Valid @RequestBody BeerDtoV2 beerDto) {
+    public ResponseEntity<BeerDto> handleUpdate(@PathVariable("beerId") UUID beerId, @Validated @RequestBody BeerDtoV2 beerDto) {
         beerServiceV2.updateBeer(beerId, beerDto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

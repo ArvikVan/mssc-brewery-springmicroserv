@@ -5,6 +5,7 @@ import arvik.springmicroserv.services.BeerService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -38,7 +39,7 @@ public class BeerController {
      * добавлен реквестбоди потому что на выходе получался пустой обжект
      */
     @PostMapping
-    public ResponseEntity<BeerDto> handlePost(@Valid @RequestBody BeerDto beerDto) {
+    public ResponseEntity<BeerDto> handlePost(@Validated @RequestBody BeerDto beerDto) {
         BeerDto saveDto = beerService.saveNewBeer(beerDto);
         HttpHeaders headers = new HttpHeaders();
         /*добавим тут урл хосту позже*/
@@ -54,7 +55,7 @@ public class BeerController {
      * добавлен реквестбоди потому что на выходе получался пустой обжект
      */
     @PutMapping({"/{beerId}"})
-    public ResponseEntity<BeerDto> handleUpdate(@PathVariable("beerId") UUID beerId, @Valid @RequestBody BeerDto beerDto) {
+    public ResponseEntity<BeerDto> handleUpdate(@PathVariable("beerId") UUID beerId, @Validated @RequestBody BeerDto beerDto) {
         beerService.updateBeer(beerId, beerDto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
