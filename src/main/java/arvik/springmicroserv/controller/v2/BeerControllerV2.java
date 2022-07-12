@@ -3,6 +3,9 @@ package arvik.springmicroserv.controller.v2;
 import arvik.springmicroserv.model.BeerDto;
 import arvik.springmicroserv.model.v2.BeerDtoV2;
 import arvik.springmicroserv.services.v2.BeerServiceV2;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +26,11 @@ import java.util.UUID;
  */
 @Validated/*дает возможность в параметрах метода валидировать и ловить исключения(NotNull)*/
 @RequestMapping("/api/v2/beer")
+@Slf4j
 @RestController
+@RequiredArgsConstructor
 public class BeerControllerV2 {
     private final BeerServiceV2 beerServiceV2;
-
-    public BeerControllerV2(BeerServiceV2 beerServiceV2) {
-        this.beerServiceV2 = beerServiceV2;
-    }
-
     @GetMapping({"/{beerId}"})
     public ResponseEntity<BeerDtoV2> getBeer(@NotNull @PathVariable("beerId") UUID beerId) {
         return new ResponseEntity<>(beerServiceV2.getBeerById(beerId), HttpStatus.OK);
@@ -44,8 +44,9 @@ public class BeerControllerV2 {
      */
     @PostMapping
     public ResponseEntity<BeerDtoV2> handlePost(@Validated @NotNull @RequestBody BeerDtoV2 beerDto) {
-        BeerDtoV2 saveDto = beerServiceV2.saveNewBeer(beerDto);
-        HttpHeaders headers = new HttpHeaders();
+        log.debug("Выводим в лог с помощью аннотации Slfj");
+        val saveDto = beerServiceV2.saveNewBeer(beerDto);
+        val headers = new HttpHeaders();
         /*добавим тут урл хосту позже*/
         headers.add("location", "/api/v1/beer" + saveDto.getId().toString());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
