@@ -6,8 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 /**
@@ -24,10 +27,22 @@ field in the class.*/
 public class BeerDto {
     @Null/*The annotated element must be null. Accepts any type.*/
     private UUID id;
+    @Null
+    private Integer version;
+    @Null
+    private OffsetDateTime createDate;
+    @Null
+    private OffsetDateTime lastModifiedDate;
     @NotBlank /*The annotated element must not be null and must contain at least one non-whitespace character. Accepts CharSequence.*/
     private String beerName;
-    @NotBlank
+    @NotNull
     private String beerStyle;
     @Positive
+    @NotNull
     private Long upc;
+    @NotNull
+    @Positive
+    private BigDecimal price;
+
+    private Integer quantityOnHand;
 }

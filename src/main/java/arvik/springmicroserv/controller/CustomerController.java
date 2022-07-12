@@ -51,20 +51,5 @@ public class CustomerController {
         customerService.deleteById(customerId);
     }
 
-    /**
-     * Задание, ловим исключение
-     * @param e исключение
-     * @return на выходе пойманное исключение(в данном случае если имя вышло с промежутка 3-100 и не нулл установленные в дто)
-     * и итогом BadRequest
-     */
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<List> validationErrorHandler(ConstraintViolationException e) {
-        List<String> errors = new ArrayList<>(e.getConstraintViolations().size());
-        e.getConstraintViolations().forEach(constraintViolation -> {
-            errors.add(constraintViolation.getPropertyPath() + " : " +  constraintViolation.getMessage());
-        });
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-
-    }
 
 }
