@@ -12,6 +12,7 @@ import java.math.BigDecimal;
  * @version 1.0
  * @since 28.04.2022
  */
+/*
 @Component
 public class BeerLoader implements CommandLineRunner {
     private final BeerRepository beerRepository;
@@ -47,3 +48,4 @@ public class BeerLoader implements CommandLineRunner {
         System.out.println("Loaded beer " + beerRepository.count());
     }
 }
+*/

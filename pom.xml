@@ -59,17 +59,19 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>${org.lombok.version}</version>
-			<optional>true</optional>
+			<version>1.18.24</version>
+			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct</artifactId>
-			<version>${mapstruct.version}</version>
-		</dependency>
+
+		<!--	<dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>-->
 
     </dependencies>
 
@@ -84,26 +86,26 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<annotationProcessorPaths>
+					<!--<annotationProcessorPaths>
 						<path>
 							<groupId>org.mapstruct</groupId>
 							<artifactId>mapstruct-processor</artifactId>
 							<version>${mapstruct.version}</version>
 						</path>
-						<path>
+						&lt;!&ndash;<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 							<version>${org.lombok.version}</version>
-						</path>
-						<path>
+						</path>&ndash;&gt;
+					&lt;!&ndash;	<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok-mapstruct-binding</artifactId>
 							<version>0.2.0</version>
-						</path>
-					</annotationProcessorPaths>
-					<compilerArgs>
+						</path>&ndash;&gt;
+					</annotationProcessorPaths>-->
+				<!--	<compilerArgs>
 						<compilerArg>-Amapstruct.defaultComponentModel=spring</compilerArg>
-					</compilerArgs>
+					</compilerArgs>-->
 				</configuration>
 			</plugin>
 		</plugins>
