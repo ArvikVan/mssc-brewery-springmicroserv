@@ -1,11 +1,13 @@
 package arvik.springmicroserv.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.config.CustomEditorConfigurer;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -34,7 +36,7 @@ public class BeerDto {
     @Null
     private Integer version;
     @Null
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ", shape=JsonFormat.Shape.STRING)
     private OffsetDateTime createDate;
     @Null
     private OffsetDateTime lastModifiedDate;
@@ -52,5 +54,6 @@ public class BeerDto {
 
     private Integer quantityOnHand;
     @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LoclaDateDeserialize.class)
     private LocalDateTime myLocalDateTime;
 }
