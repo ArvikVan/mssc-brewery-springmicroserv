@@ -3,6 +3,8 @@ package arvik.springmicroserv.model;
 import arvik.springmicroserv.domain.Beer;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -16,6 +18,7 @@ public class BaseTest {
                 .lastModifiedDate(OffsetDateTime.now())
                 .price(BigDecimal.valueOf(100L))
                 .upc(12121L)
+                .myLocalDateTime(LocalDateTime.now())
                 .build();
     }
 }
