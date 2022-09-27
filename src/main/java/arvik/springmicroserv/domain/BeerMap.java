@@ -22,5 +22,5 @@ public class BeerMap {
     private UUID id;
     private String beerName;
     private BeerStyleEnum beerStyle;
-    private Long upc;
+    private String upc;
 }

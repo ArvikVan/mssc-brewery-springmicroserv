@@ -1,5 +1,6 @@
 package arvik.springmicroserv.model;
 
+import arvik.springmicroserv.model.v2.BeerStyleEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -24,12 +25,10 @@ import java.util.UUID;
  * @version 1.0
  * @since 25.03.2022
  */
-@Data /*Equivalent to @Getter @Setter @RequiredArgsConstructor @ToString @EqualsAndHashCode.*/
-@NoArgsConstructor/*Generates a no-args constructor. Will generate an error message if such a
-constructor cannot be written due to the existence of final fields.*/
-@AllArgsConstructor/*Generates an all-args constructor. An all-args constructor requires one argument for every
-field in the class.*/
-@Builder/*куча конструкторов на каждое поле и класс*/
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class BeerDto {
     @Null/*The annotated element must be null. Accepts any type.*/
     private UUID id;
@@ -43,10 +42,9 @@ public class BeerDto {
     @NotBlank /*The annotated element must not be null and must contain at least one non-whitespace character. Accepts CharSequence.*/
     private String beerName;
     @NotNull
-    private String beerStyle;
-    @Positive
+    private BeerStyleEnum beerStyle;
     @NotNull
-    private Long upc;
+    private String upc;
     @NotNull
     @Positive
     @JsonFormat(shape = JsonFormat.Shape.STRING)
