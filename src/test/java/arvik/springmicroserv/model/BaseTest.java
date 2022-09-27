@@ -15,7 +15,7 @@ public class BaseTest {
     BeerDto getDTO() {
         return BeerDto.builder()
                 .beerName("Name")
-                .beerStyle(BeerStyleEnum.valueOf("Ale"))
+                .beerStyle(BeerStyleEnum.valueOf("ALE"))
                 .id(UUID.randomUUID())
                 .createDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
